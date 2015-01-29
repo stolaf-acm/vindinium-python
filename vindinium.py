@@ -3,6 +3,7 @@
 
 import requests
 import webbrowser
+import sys
 
 CONFIG_KEYS = ['mode']
 DIRECTIONS = ['Stay', 'North', 'South', 'East', 'West']
@@ -40,6 +41,10 @@ class client:
             api_url = '/api/training'
 
         response = self._request({'key': self.key}, server_url + api_url)
+
+        if response == None:
+            print('Error: game could not be initialized')
+            sys.exit(1)
 
         self.game = Game(response['game'])
         self.hero = Hero(response['hero'])
