@@ -7,7 +7,7 @@ import vindinium
 client = vindinium.client()
 
 # Initialization / Configuration of the game goes here
-client.setKey('ny8jk6jp')
+client.setKey('your_key')
 client.setParam('mode', 'training')
 
 # Begin the game
@@ -17,6 +17,7 @@ client.startGame()
 while not client.game.finished:
 
     # Code here to decide how to make a move
+    print(client.game.board)
 
     # Make the chosen move - this function will update client's game and state
     client.makeMove('dir')

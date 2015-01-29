@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-import pprint
+import webbrowser
 
 CONFIG_KEYS = ['mode']
 DIRECTIONS = ['Stay', 'North', 'South', 'East', 'West']
@@ -47,7 +47,8 @@ class client:
         self.playUrl = response['playUrl']
 
         # Print a message that the game has started
-        print('Game Started at:', self.viewUrl)
+        print(str('Game Started at:'), str(self.viewUrl))
+        webbrowser.open(self.viewUrl)
 
     def makeMove(self, move):
         """Make a move and update the client's state"""
@@ -85,8 +86,7 @@ class Game:
         self.turn = None
         self.maxTurns = None
         self.heroes = []
-        self.board_size = None
-        self.board_tiles = []
+        self.board = None
         self.finished = None
 
         self.process(self.state)
@@ -96,15 +96,81 @@ class Game:
         self.turn = game['turn']
         self.maxTurns = game['maxTurns']
         self.finished = game['finished']
-        self.board_size = game['board']['size']
-        self.board_tiles = game['board']['tiles']
+        self.board = Board(game['board'])
 
     def results(self):
         print('Finished.')
 
+class Board:
+    """A class representing the board of the game"""
+    def __init__(self, board):
+        self.size = None
+        self.map = []
+
+        self.process(board)
+
+    def process(self, board):
+        self.size = board['size']
+
+        # Loop through the tiles to add locations to the map
+        # y is the row number, x is the col number
+        for y in range(0, len(board['tiles']), self.size * 2):
+            maprow = []
+
+            for x in range(0, self.size * 2, 2):
+                tile = board['tiles'][x+y]
+                if tile == ' ':
+                    # empty space
+                    maprow.append(' ')
+
+                elif tile == '#':
+                    # wall
+                    maprow.append('#')
+
+                elif tile == '$':
+                    # mine
+                    next_tile = board['tiles'][x+y+1]
+                    if next_tile == '1':
+                        maprow.append('r')
+                    elif next_tile == '2':
+                        maprow.append('b')
+                    elif next_tile == '3':
+                        maprow.append('g')
+                    elif next_tile == '4':
+                        maprow.append('y')
+                    elif next_tile == '-':
+                        maprow.append('$')
+
+                elif tile == '[':
+                    # tavern
+                    maprow.append('T')
+
+                elif tile == '@':
+                    # player
+                    next_tile = board['tiles'][x+y+1]
+                    if next_tile == '1':
+                        maprow.append('R')
+                    elif next_tile == '2':
+                        maprow.append('B')
+                    elif next_tile == '3':
+                        maprow.append('G')
+                    elif next_tile == '4':
+                        maprow.append('Y')
+
+            self.map.append(maprow)
+
+    def __getitem__(self, index):
+        return self.map[index]
+
+    def __str__(self):
+        result = ''
+        for row in range(0, len(self.map)):
+            result += ''.join(self.map[row]) + '\n'
+        return result
+
 class Hero:
     """A class representing the vindinium hero object"""
-    def __init__(self, hero = None):
+    def __init__(self, hero):
         pass
 
 if __name__ == '__main__':
