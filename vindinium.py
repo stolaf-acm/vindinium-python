@@ -80,6 +80,7 @@ class client:
                 return response.json()
             else:
                 print("HTTP Error", str(response.status_code), ":", response.text)
+                sys.exit(1)
         except requests.exceptions.RequestException as e:
             print('Error in request:', str(e))
 
@@ -88,20 +89,14 @@ class Game:
     def __init__(self, state):
         # Set the default values of the game
         self.state = state
-        self.turn = None
-        self.maxTurns = None
         self.heroes = []
-        self.board = None
-        self.finished = None
+        self.turn = state['turn']
+        self.maxTurns = state['maxTurns']
+        self.finished = state['finished']
+        self.board = Board(state['board'])
 
-        self.process(self.state)
-
-    def process(self, game):
-        """Parse the game's state"""
-        self.turn = game['turn']
-        self.maxTurns = game['maxTurns']
-        self.finished = game['finished']
-        self.board = Board(game['board'])
+        for i in range(0, len(state['heroes'])):
+            self.heroes.append(Hero(state['heroes'][i]))
 
     def results(self):
         print('Finished.')
@@ -176,19 +171,11 @@ class Board:
 class Hero:
     """A class representing the vindinium hero object"""
     def __init__(self, hero):
-        self.pos = None
-        self.lastDir = None
-        self.life = None
-        self.gold = None
-        self.mineCount = None
-        self.spawnPos = None
-        self.crashed = None
-
-        self.process(hero)
-
-    def process(self, hero):
+        try:
+            self.lastDir = hero['lastDir']
+        except KeyError:
+            self.lastDir = None
         self.pos = (hero['pos']['x'], hero['pos']['y'])
-        self.lastDir = hero['lastDir']
         self.life = hero['life']
         self.gold = hero['gold']
         self.mineCount = hero['mineCount']
