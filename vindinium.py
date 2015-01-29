@@ -176,7 +176,24 @@ class Board:
 class Hero:
     """A class representing the vindinium hero object"""
     def __init__(self, hero):
-        pass
+        self.pos = None
+        self.lastDir = None
+        self.life = None
+        self.gold = None
+        self.mineCount = None
+        self.spawnPos = None
+        self.crashed = None
+
+        self.process(hero)
+
+    def process(hero):
+        self.pos = (hero['pos']['x'], hero['pos']['y'])
+        self.lastDir = hero['lastDir']
+        self.life = hero['life']
+        self.gold = hero['gold']
+        self.mineCount = hero['mineCount']
+        self.spawnPos = (hero['spawnPos']['x'], hero['spawnPos']['y'])
+        self.crashed = hero['crashed']
 
 if __name__ == '__main__':
     pass
