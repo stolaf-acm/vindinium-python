@@ -17,9 +17,10 @@ client.startGame()
 while not client.game.finished:
 
     # Code here to decide how to make a move
-    print(client.game.board)
+
 
     # Make the chosen move - this function will update client's game and state
+    # 'dir' can be one of 'Stay', 'North', 'South', 'East', or 'West'
     client.makeMove('dir')
 
 # See the results of the game
