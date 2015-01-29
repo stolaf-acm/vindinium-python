@@ -61,12 +61,12 @@ This class represents the board of the game
 
 | Character | Description |
 | --------- | ----------- |
-| ' '       | An empty tile |
-| '#'       | An impassable tile |
-| 'T'       | A tavern |
-| 'R', 'B', 'G', 'Y' | A hero (you are 'R') |
-| 'r', 'b', 'g', 'y' | A mine owned by a hero |
-| '$'       | An empty mine |
+| `' '`     | An empty tile |
+| `'#'`     | An impassable tile |
+| `'T'`     | A tavern |
+| `'R', 'B', 'G', 'Y'` | A hero (you are `'R'`) |
+| `'r', 'b', 'g', 'y'` | A mine owned by a hero |
+| `'$'`     | An empty mine |
 
 ##### Methods:
 `Board[]` - returns the map row that is indexed. Allows for `Board[]` rather than `Board.map[]`
