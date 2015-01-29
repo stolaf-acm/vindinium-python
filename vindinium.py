@@ -186,7 +186,7 @@ class Hero:
 
         self.process(hero)
 
-    def process(hero):
+    def process(self, hero):
         self.pos = (hero['pos']['x'], hero['pos']['y'])
         self.lastDir = hero['lastDir']
         self.life = hero['life']
