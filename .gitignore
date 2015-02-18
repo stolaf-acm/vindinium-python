@@ -52,3 +52,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Symlink for testing ai's in the ai folder
+ai/vindinium.py
