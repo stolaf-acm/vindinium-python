@@ -106,6 +106,7 @@ class Board:
     def __init__(self, board):
         self.size = None
         self.map = []
+        self.mines = []
 
         self.process(board)
 
@@ -129,6 +130,7 @@ class Board:
 
                 elif tile == '$':
                     # mine
+                    self.mines.append((int(y/(self.size*2)),int(x/2)))
                     next_tile = board['tiles'][x+y+1]
                     if next_tile == '1':
                         maprow.append('r')
