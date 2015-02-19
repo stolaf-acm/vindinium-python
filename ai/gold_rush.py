@@ -16,7 +16,7 @@ client.setParam('mode', 'training')
 # Begin the game
 client.startGame()
 
-# This is the main loop of the game, where you will decide how to move
+# This is the main loop of the game
 while not client.game.finished:
 
     # Loop over all of the mines to find the closest one
